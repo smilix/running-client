@@ -1,0 +1,10 @@
+.xno-block {
+  label {
+    display: block;
+  }
+
+  .form-control {
+    display: inline-block;
+    width: inherit;
+  }
+}

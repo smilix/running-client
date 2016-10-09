@@ -1,0 +1,23 @@
+<table class="table table-bordered" *ngIf="run">
+  <tbody>
+  <tr>
+    <td>Wann</td>
+    <td>{{run.date * 1000 | date:'dd.MM.y HH:mm'}}</td>
+  </tr>
+  <tr>
+    <td>Strecke</td>
+    <td>{{run.length | distance}} km</td>
+  </tr>
+  <tr>
+    <td>Zeit</td>
+    <td>{{run.timeUsed | duration}}</td>
+  </tr>
+  <tr>
+    <td>Kommentar</td>
+    <td>{{run.comment}}</td>
+  </tr>
+  </tbody>
+</table>
+
+
+
