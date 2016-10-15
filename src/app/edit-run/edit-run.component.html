@@ -1,9 +1,5 @@
-<!--<td><a class="btn btn-link"><span class="glyphicon glyphicon-chevron-up"></span></a></td>-->
-<!--<td><a class="btn btn-link"><span class="glyphicon glyphicon-chevron-down"></span></a></td>-->
-
 <div class="well">
-
-  <form (ngSubmit)="newRun()" #runForm="ngForm">
+  <form (ngSubmit)="save()" #runForm="ngForm">
     <div class="alert alert-danger" *ngIf="error">Error adding new run.
       <pre>{{error}}</pre>
     </div>
@@ -49,8 +45,8 @@
       <textarea [(ngModel)]="model.comment" [disabled]="sending" name="comment" class="form-control"></textarea>
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-primary" [disabled]="!runForm.form.valid || sending">Eintragen <span *ngIf="sending"
-                                                                                                                class="glyphicon glyphicon-refresh"></span>
+      <button type="submit" class="btn btn-primary" [disabled]="!runForm.form.valid || sending">
+        {{newRunMode ? 'Add' : 'Save'}} <span *ngIf="sending" class="glyphicon glyphicon-refresh"></span>
       </button>
     </div>
   </form>

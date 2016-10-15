@@ -33,7 +33,7 @@ export class ViewRunComponent implements OnInit {
   }
   
   edit() {
-    this.router.navigate(['/runs/']);
+    this.router.navigate(['/editRun/', this.run.id]);
   }
   
   deleteRun() {
