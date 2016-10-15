@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Run} from "../shared/run";
 import {RunRepositoryService} from "../shared/run-repository.service";
 import {Router, ActivatedRoute} from "@angular/router";
+import {IPaginationInstance} from "ng2-pagination/index";
 
 @Component({
   selector: 'app-list-runs',
@@ -11,13 +12,16 @@ import {Router, ActivatedRoute} from "@angular/router";
 })
 export class ListRunsComponent implements OnInit {
   
-  private PAGE_SIZE = 30;
-
   runList:Run[];
   highlight:number = -1;
   
-  pageIndex:number = 0;
-  pageCount:number = null;
+  // pageIndex:number = 0;
+  // pageCount:number = null;
+
+  public paginateConfig:IPaginationInstance = {
+    itemsPerPage: 30,
+    currentPage: 1
+  };
 
   constructor(private runRepository:RunRepositoryService, private router:Router, private route:ActivatedRoute) {
   }
@@ -31,18 +35,18 @@ export class ListRunsComponent implements OnInit {
   }
   
   loadPage(pageIndex:number) {
-    this.pageIndex = pageIndex;
-    
-    let begin = this.pageIndex * this.PAGE_SIZE;
-    this.runRepository.getRuns(begin, this.PAGE_SIZE)
+    // this.pageIndex = pageIndex;
+    //
+    // let begin = this.pageIndex * this.PAGE_SIZE;
+    this.runRepository.getRuns(0)
       .then(result => {
-        console.log('r', result);
+        // console.log('r', result);
         this.runList = result.runs;
         
-        if (this.pageCount === null) {
-          return;
-        }
-        this.pageCount = Math.ceil(result.count / this.PAGE_SIZE);
+        // if (this.pageCount === null) {
+        //   return;
+        // }
+        // this.pageCount = Math.ceil(result.count / this.PAGE_SIZE);
       });
   }
 

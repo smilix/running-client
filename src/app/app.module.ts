@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import {Ng2PaginationModule} from 'ng2-pagination';
+
 import { routing,
   appRoutingProviders }  from './app.routing';
 
@@ -33,7 +35,8 @@ import {DurationPipe} from "./shared/duration.pipe";
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing
+    routing,
+    Ng2PaginationModule
   ],
   providers: [
     appRoutingProviders

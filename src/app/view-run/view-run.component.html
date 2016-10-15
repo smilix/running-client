@@ -20,4 +20,13 @@
 </table>
 
 
+<button class="btn btn-default" (click)="back()">Back</button>
 
+<div class="pull-right">
+  <button class="btn btn-success" (click)="edit()">Edit</button>
+  <button class="btn btn-danger" (click)="showConfirm = true" *ngIf="!showConfirm">Delete</button>
+<span *ngIf="showConfirm">
+  <button class="btn btn-danger" (click)="deleteRun()">Yes, Delete</button>
+  <button class="btn btn-default" (click)="showConfirm = false">Cancel</button>
+</span>
+</div>

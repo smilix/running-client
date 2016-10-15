@@ -9,7 +9,7 @@ const appRoutes:Routes = [
   {path: 'overview', component: OverviewComponent},
   {path: 'runs', component: ListRunsComponent},
   {path: 'runs/:id', component: ViewRunComponent},
-  {path: 'add', component: AddRunsComponent},
+  {path: 'addRun', component: AddRunsComponent},
   {path: '**', redirectTo: '/overview'}
 ];
 

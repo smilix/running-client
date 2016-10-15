@@ -67,6 +67,24 @@ export class RunRepositoryService {
       })
       .catch(this.handleError);
   }
-
+  
+  updateRun(run:Run):Promise<Run> {
+    if (run.id == undefined || run.id == null || !run.id) {
+      throw new Error('The run must have an id.');
+    }
+    
+    return this.http.put(RunRepositoryService.BACKEND + '/runs/' + run.id, run)
+      .toPromise()
+      .then(resp => {
+        return new Run(resp.json());
+      })
+      .catch(this.handleError);
+  }
+  
+  deleteRun(id:number):Promise<void> {
+    return this.http.delete(RunRepositoryService.BACKEND + '/runs/' + id)
+      .toPromise()
+      .catch(this.handleError);
+  }
 
 }

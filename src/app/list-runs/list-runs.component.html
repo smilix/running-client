@@ -9,7 +9,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let run of runList" [class.success]="highlight == run.id">
+  <tr *ngFor="let run of runList | paginate: paginateConfig" [class.success]="highlight == run.id">
     <td>{{run.date * 1000 | date:'dd.MM.y HH:mm'}}</td>
     <td class="text-right">{{run.length | distance}} km</td>
     <td class="text-right">{{run.timeUsed | duration}}</td>
@@ -21,18 +21,29 @@
   </tbody>
 </table>
 
-<div class="page-nation">
+
+<!-- with bootstrap template -->
+<pagination-controls #pagination (pageChange)="paginateConfig.currentPage = $event" class="text-center">
+
   <ul class="pagination pagination-large">
-    <li class="disabled"><span>«</span></li>
 
-    <li class="active" *ngFor="let page of "><span>1</span></li>
-    <li><a href="#">9</a></li>
+    <li class="pagination-previous" [class.disabled]="pagination.isFirstPage()">
+      <a *ngIf="!pagination.isFirstPage()" (click)="pagination.previous()"> &laquo; </a>
+      <span *ngIf="pagination.isFirstPage()"> &laquo; </span>
+    </li>
 
-    <li class="disabled"><span>...</span></li>
-    <li>
-    <li><a rel="next" href="#">Next</a></li>
+    <li *ngFor="let page of pagination.pages" [class.active]="pagination.getCurrent() === page.value">
+      <a (click)="pagination.setCurrent(page.value)" *ngIf="pagination.getCurrent() !== page.value">
+        {{ page.label }}
+      </a>
+      <span *ngIf="pagination.getCurrent() === page.value">{{ page.label }}</span>
+    </li>
+
+    <li class="pagination-next" [class.disabled]="pagination.isLastPage()" *ngIf="pagination.directionLinks">
+      <a *ngIf="!pagination.isLastPage()" (click)="pagination.next()"> &raquo; </a>
+      <span *ngIf="pagination.isLastPage()"> &raquo; </span>
+    </li>
 
   </ul>
-</div>
 
-
+</pagination-controls>

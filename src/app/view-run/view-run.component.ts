@@ -1,7 +1,8 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {RunRepositoryService} from "../shared/run-repository.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Run} from "../shared/run";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-view-run',
@@ -13,8 +14,9 @@ import {Run} from "../shared/run";
 export class ViewRunComponent implements OnInit {
 
   run:Run;
+  showConfirm = false;
 
-  constructor(private route:ActivatedRoute, private runRepository:RunRepositoryService) {
+  constructor(private route:ActivatedRoute, private router:Router, private runRepository:RunRepositoryService, private location:Location) {
   }
 
   ngOnInit() {
@@ -26,4 +28,17 @@ export class ViewRunComponent implements OnInit {
     }).unsubscribe();
   }
 
+  back() {
+    this.location.back();
+  }
+  
+  edit() {
+    this.router.navigate(['/runs/']);
+  }
+  
+  deleteRun() {
+    this.runRepository.deleteRun(this.run.id).then(resp => {
+      this.router.navigate(['/runs']);
+    });
+  }
 }
