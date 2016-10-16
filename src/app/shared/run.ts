@@ -14,4 +14,8 @@ export class Run {
   get paceKm() {
     return this.timeUsed / (this.length / 1000); 
   }
+  
+  public getDateObj() {
+    return new Date(this.date * 1000);
+  }
 }

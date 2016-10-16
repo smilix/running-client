@@ -2,7 +2,12 @@
 
 The Angular2 web client for my running log.
 
-##
+## TODO
+
+ * [ ] Login/Auth
+ * [ ] Caching
+ * [ ] Fill the overview
+ * [ ] Make charts
 
 
 ## Used libs

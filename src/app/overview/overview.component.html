@@ -1,3 +1,38 @@
-<p>
-  overview works!
-</p>
+<div class="panel panel-info">
+  <div class="panel-heading">Weekly stats</div>
+
+  <table class="table">
+    <tr *ngFor="let week of weekly">
+      <td>{{week.date}}</td>
+      <td>{{week.totalLength | distance}} km</td>
+      <td>{{week.totalTimeUsed | duration}}</td>
+      <td>{{week.paceKm | duration}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">Monthly stats</div>
+
+  <table class="table">
+    <tr *ngFor="let month of monthly">
+      <td>{{month.date}}</td>
+      <td>{{month.totalLength | distance}} km</td>
+      <td>{{month.totalTimeUsed | duration}}</td>
+      <td>{{month.paceKm | duration}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">Year stats</div>
+
+  <table class="table">
+    <tr *ngFor="let year of yearly">
+      <td>{{year.date}}</td>
+      <td>{{year.totalLength | distance}} km</td>
+      <td>{{year.totalTimeUsed | duration}}</td>
+      <td>{{year.paceKm | duration}}</td>
+    </tr>
+  </table>
+</div>
