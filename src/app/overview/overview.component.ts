@@ -3,6 +3,7 @@ import {RunRepositoryService} from "../shared/run-repository.service";
 import {Run} from "../shared/run";
 import {DateFormatter} from "@angular/common/src/facade/intl";
 import {DatePipe} from "@angular/common";
+import {AuthService} from "../shared/auth/auth.service";
 
 @Component({
   selector: 'app-overview',

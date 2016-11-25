@@ -4,6 +4,7 @@ import {OverviewComponent} from "./overview/overview.component";
 import {ListRunsComponent} from "./list-runs/list-runs.component";
 import {ViewRunComponent} from "./view-run/view-run.component";
 import {EditRunComponent} from "./edit-run/edit-run.component";
+import {LoginComponent} from "./login/login.component";
 
 const appRoutes:Routes = [
   {path: 'overview', component: OverviewComponent},
@@ -11,7 +12,8 @@ const appRoutes:Routes = [
   {path: 'runs/:id', component: ViewRunComponent},
   {path: 'editRun/:id', component: EditRunComponent},
   {path: 'newRun', component: EditRunComponent},
-  {path: '**', redirectTo: '/overview'}
+  {path: 'login', component: LoginComponent},
+  {path: '**', redirectTo: '/login'}
 ];
 
 

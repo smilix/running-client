@@ -23,8 +23,9 @@ export class RunRepositoryService {
   }
 
   private handleError(resp:any) {
-    console.error('An error occurred', resp);
-    return Promise.reject(resp.json().reason);
+    var errData = resp && resp.json ? resp.json() : resp;
+    console.error('An error occurred', errData);
+    return Promise.reject(errData);
   }
 
   getRuns(start:number=0, max?:number):Promise<RunPage> {

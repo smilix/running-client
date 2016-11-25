@@ -21,6 +21,11 @@
           <a routerLink="/newRun">Hinzufügen</a>
         </li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="isLoggedIn">
+          <a (click)="logout()" class="btn btn-link">Logout</a>
+        </li>
+      </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>

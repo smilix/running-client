@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="wrapper">
+    <form class="form-signin" (ngSubmit)="save()" #loginForm="ngForm">
+      <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+      <hr class="colorgraph">
+      <br>
+
+      <div class="alert alert-danger" *ngIf="loginError">
+        Please check your credentials. ({{loginError}})
+      </div>
+
+      <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" [(ngModel)]="model.user"/>
+      <input type="password" class="form-control" name="Password" placeholder="Password" required="" [(ngModel)]="model.password"/>
+
+      <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="submit" [disabled]="!loginForm.form.valid || sending">
+        Login <span *ngIf="sending" class="glyphicon glyphicon-refresh"></span>
+      </button>
+    </form>
+  </div>
+</div>
