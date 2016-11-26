@@ -14,6 +14,10 @@ export class DurationPipe implements PipeTransform {
   }
 
   transform(seconds: any, args?: any): any {
+    if (isNaN(seconds) || typeof seconds != 'number') {
+      return '-';
+    }
+
     var minutes = Math.floor(seconds / 60); // 60
     var hours = Math.floor(minutes / 60); // 1
 
