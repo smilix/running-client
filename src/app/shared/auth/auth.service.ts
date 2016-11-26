@@ -1,41 +1,66 @@
+///<reference path="../../../../node_modules/rxjs/add/operator/catch.d.ts"/>
 import {Injectable} from '@angular/core';
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {SessionHolder} from "./SessionHolder";
 import {Observable, Subject} from "rxjs/Rx";
+import {LocalStorage} from "ng2-webstorage/dist/app";
 
 export class Credentials {
 
-  constructor(public user:string,
-              public password:string) {
+  constructor(public user:string, public password:string, public remember:boolean) {
   }
 }
+
+class SavedCredentials {
+  constructor(public user:string, public password:string) {
+  }
+}
+
 
 @Injectable()
 export class AuthService {
 
   static BACKEND = 'http://localhost:8080';
 
+  @LocalStorage()
+  private _savedCredentials:SavedCredentials = null;
+
   private _isLoggedIn = new Subject<boolean>();
+
 
   constructor(private http:Http, private sessionHolder:SessionHolder) {
     this._isLoggedIn.next(this.isLoggedIn());
   }
 
-  login(data:Credentials) {
+  private loginInternal(user:string, password:string) {
     return this.http.post(AuthService.BACKEND + '/auth', {
-      user: data.user,
-      password: data.password
-    })
-      .toPromise()
-      .then(resp => {
-        var json = resp.json();
-        this.sessionHolder.set(json.session);
-        this._isLoggedIn.next(true);
-      })
-      .catch(resp => {
-        console.error('An error occurred', resp);
-        return Promise.reject(resp.json().reason);
-      });
+      user: user,
+      password: password
+    }).map((resp:Response) => {
+      var json = resp.json();
+      this.sessionHolder.set(json.session);
+      this._isLoggedIn.next(true);
+      return true;
+    }).catch((error:any) => {
+      console.error('An error occurred', error);
+      return Observable.throw(error.json().reason);
+    });
+  }
+
+  login(data:Credentials):Observable<boolean> {
+    if (data.remember) {
+      this._savedCredentials = new SavedCredentials(data.user, data.password);
+    }
+
+    return this.loginInternal(data.user, data.password);
+  }
+
+  tryAutoLogin():Observable<boolean> {
+    if (this._savedCredentials == null) {
+      return Observable.from([false]);
+    }
+
+    return this.loginInternal(this._savedCredentials.user, this._savedCredentials.password);
   }
 
   isLoggedIn() {
@@ -48,6 +73,7 @@ export class AuthService {
 
   logout() {
     this.sessionHolder.clear();
+    this._savedCredentials = null;
     this._isLoggedIn.next(false);
   }
 

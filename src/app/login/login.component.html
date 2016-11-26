@@ -12,6 +12,12 @@
       <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus="" [(ngModel)]="model.user"/>
       <input type="password" class="form-control" name="Password" placeholder="Password" required="" [(ngModel)]="model.password"/>
 
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="remember" [(ngModel)]="model.remember"> Remember Password
+        </label>
+      </div>
+
       <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="submit" [disabled]="!loginForm.form.valid || sending">
         Login <span *ngIf="sending" class="glyphicon glyphicon-refresh"></span>
       </button>

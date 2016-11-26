@@ -57,7 +57,7 @@ import {AuthService} from "./shared/auth/auth.service";
         new HttpInterceptor(backend, requestOptions, router, sessionHolder),
       deps: [XHRBackend, RequestOptions, Router, SessionHolder]
     },
-    AuthService
+    AuthService,
   ],
   bootstrap: [AppComponent]
 })

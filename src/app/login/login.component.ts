@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  model = new Credentials('', '');
+  model = new Credentials('', '', false);
   sending = false;
   loginError:string = null;
 
@@ -18,6 +18,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      console.log('User is already logged in.');
+      this.router.navigate(['/overview']);
+      return;
+    }
+
+    this.authService.tryAutoLogin().subscribe(isLoggedInNow => {
+      if (isLoggedInNow) {
+        console.log('User logged in by remembered password.');
+        this.router.navigate(['/overview']);
+      }
+    });
   }
 
   save() {
@@ -25,13 +37,14 @@ export class LoginComponent implements OnInit {
     this.loginError = null;
 
     let self = this;
-    this.authService.login(this.model).then(
-      function ok() {
-        self.router.navigate(['/overview']);
-      }, function error(err) {
+    this.authService.login(this.model).subscribe(
+      () => self.router.navigate(['/overview']),
+      err => {
         self.loginError = err;
         self.sending = false;
-      });
+      }
+    );
+
   }
 
 }
