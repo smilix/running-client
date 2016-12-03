@@ -4,6 +4,7 @@ import {Http, Response} from "@angular/http";
 import {SessionHolder} from "./SessionHolder";
 import {Observable, Subject} from "rxjs/Rx";
 import {LocalStorage} from "ng2-webstorage/dist/app";
+import {environment} from "../../../environments/environment";
 
 export class Credentials {
 
@@ -20,8 +21,6 @@ class SavedCredentials {
 @Injectable()
 export class AuthService {
 
-  static BACKEND = 'http://localhost:8080';
-
   @LocalStorage()
   private _savedCredentials:SavedCredentials = null;
 
@@ -33,7 +32,7 @@ export class AuthService {
   }
 
   private loginInternal(user:string, password:string) {
-    return this.http.post(AuthService.BACKEND + '/auth', {
+    return this.http.post(environment.backendPath + '/auth', {
       user: user,
       password: password
     }).map((resp:Response) => {

@@ -5,7 +5,7 @@ The Angular2 web client for my running log.
 ## TODO
 
  * [X] Login/Auth
-   * [ ] Config service - filled by build tools?
+   * [X] Config service - filled by build tools?
  * [ ] Caching
  * [X] Fill the overview
  * [ ] Make charts

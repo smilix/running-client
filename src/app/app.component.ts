@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, NavigationStart} from "@angular/router";
 import {AuthService} from "./shared/auth/auth.service";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent {
     this.isLoggedIn = this.authService.isLoggedIn();
     this.authService.loggedInObserver().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
-    })
+    });
   }
 
   logout() {

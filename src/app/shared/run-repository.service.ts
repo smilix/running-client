@@ -3,6 +3,7 @@ import {Http, RequestOptionsArgs, URLSearchParams} from '@angular/http';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise';
 import {Run} from "./run";
+import {environment} from "../../environments/environment";
 
 export class RunPage {
   constructor(public runs:Run[],
@@ -13,8 +14,6 @@ export class RunPage {
 
 @Injectable()
 export class RunRepositoryService {
-
-  static BACKEND = 'http://localhost:8080';
 
   private http;
 
@@ -38,7 +37,7 @@ export class RunRepositoryService {
     let options = {
       search: urlParams
     };
-    return this.http.get(RunRepositoryService.BACKEND + '/runs', options)
+    return this.http.get(environment.backendPath + '/runs', options)
       .toPromise()
       .then(resp => {
         var json = resp.json();
@@ -51,7 +50,7 @@ export class RunRepositoryService {
   }
   
   getRunById(id:number):Promise<Run> {
-    return this.http.get(RunRepositoryService.BACKEND + '/runs/' + id)
+    return this.http.get(environment.backendPath + '/runs/' + id)
       .toPromise()
       .then(resp => {
         return new Run(resp.json());
@@ -60,7 +59,7 @@ export class RunRepositoryService {
   }
 
   addRun(run:Run):Promise<Run> {
-    return this.http.post(RunRepositoryService.BACKEND + '/runs', run)
+    return this.http.post(environment.backendPath + '/runs', run)
       .toPromise()
       .then(resp => {
         run.id = resp.json().id;
@@ -74,7 +73,7 @@ export class RunRepositoryService {
       throw new Error('The run must have an id.');
     }
     
-    return this.http.put(RunRepositoryService.BACKEND + '/runs/' + run.id, run)
+    return this.http.put(environment.backendPath + '/runs/' + run.id, run)
       .toPromise()
       .then(resp => {
         return new Run(resp.json());
@@ -83,7 +82,7 @@ export class RunRepositoryService {
   }
   
   deleteRun(id:number):Promise<void> {
-    return this.http.delete(RunRepositoryService.BACKEND + '/runs/' + id)
+    return this.http.delete(environment.backendPath + '/runs/' + id)
       .toPromise()
       .catch(this.handleError);
   }
