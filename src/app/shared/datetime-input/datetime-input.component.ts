@@ -36,7 +36,7 @@ export class DatetimeInputComponent implements ControlValueAccessor {
 
   //From ControlValueAccessor interface
   writeValue(value: any) {
-    console.log('writeValue:', value);
+    // console.log('writeValue:', value);
     if (value !== this.innerDate) {
       this.innerDate = value;
       this.formattedDate = DatetimeInputComponent.formatDate(value);
@@ -57,7 +57,7 @@ export class DatetimeInputComponent implements ControlValueAccessor {
     if (v !== this.formattedDate) {
       this.formattedDate = v;
       this.innerDate = DatetimeInputComponent.parseDateString(v);
-      console.log('onChangeCallback', this.innerDate);
+      // console.log('onChangeCallback', this.innerDate);
       this.onChangeCallback(this.innerDate);
     }
   }
