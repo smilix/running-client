@@ -21,4 +21,4 @@ The Angular2 web client for my running log.
 ## Acknowledgement
 
 * Login template: http://bootsnipp.com/snippets/featured/simple-login-form-bootsnipp-style-colorgraph
-
+* Favicon from: https://openclipart.org/detail/2256/run
