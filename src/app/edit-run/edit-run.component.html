@@ -5,11 +5,11 @@
     </div>
     <div class="form-group no-block">
       <label>Wann</label>
-      <app-datetime-input [(ngModel)]="model.date" [disabled]="sending" name="date" styleClass="form-control"></app-datetime-input>
+      <app-datetime-input [(ngModel)]="model.date" [disabled]="sending" name="date" styleClass="form-control input-lg"></app-datetime-input>
     </div>
     <div class="form-group">
       <label>Strecke (km)</label>
-      <div class="input-group">
+      <div class="input-group input-group-lg">
         <input type="number" [(ngModel)]="model.length" [disabled]="sending" name="length" class="form-control input-number" required>
         <span class="input-group-btn">
             <button type="button" class="btn btn-danger btn-number" (click)="decLength()" [disabled]="sending">
@@ -26,7 +26,7 @@
 
     <div class="form-group">
       <label>Zeit (Minuten)</label>
-      <div class="input-group">
+      <div class="input-group input-group-lg">
         <input type="number" [(ngModel)]="model.timeUsed" [disabled]="sending" name="timeUsed" class="form-control" required>
         <span class="input-group-btn">
             <button type="button" class="btn btn-danger btn-number" (click)="decTimeUsed()" [disabled]="sending">
