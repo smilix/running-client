@@ -22,7 +22,7 @@ class SavedCredentials {
 export class AuthService {
 
   @LocalStorage()
-  private _savedCredentials:SavedCredentials = null;
+  private _savedCredentials:SavedCredentials;
 
   private _isLoggedIn = new Subject<boolean>();
 
