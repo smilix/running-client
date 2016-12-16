@@ -25,6 +25,7 @@ import {HttpInterceptor} from "./shared/auth/HttpInterceptor";
 import {SessionHolder} from "./shared/auth/SessionHolder";
 import {Ng2Webstorage} from 'ng2-webstorage';
 import {AuthService} from "./shared/auth/auth.service";
+import { MonthViewComponent } from './details/month-view/month-view.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {AuthService} from "./shared/auth/auth.service";
 
     DistancePipe,
     DurationPipe,
-    LoginComponent
+    LoginComponent,
+    MonthViewComponent
   ],
   imports: [
     BrowserModule,

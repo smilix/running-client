@@ -1,0 +1,12 @@
+<div class="panel panel-info">
+  <div class="panel-heading">Monthly stats</div>
+
+  <table class="table">
+    <tr *ngFor="let month of monthly">
+      <td>{{month.date}}</td>
+      <td>{{month.totalLength | distance}} km</td>
+      <td>{{month.totalTimeUsed | duration}}</td>
+      <td>{{month.paceKm | duration}}</td>
+    </tr>
+  </table>
+</div>

@@ -4,12 +4,13 @@ import {Run} from "../shared/run";
 import {DateFormatter} from "@angular/common/src/facade/intl";
 import {DatePipe} from "@angular/common";
 import {AuthService} from "../shared/auth/auth.service";
+import {Stat, StatsService} from "../shared/stats.service";
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss'],
-  providers: [RunRepositoryService, DatePipe]
+  providers: [RunRepositoryService, DatePipe, StatsService]
 })
 export class OverviewComponent implements OnInit {
 
@@ -26,7 +27,7 @@ export class OverviewComponent implements OnInit {
   monthly:Stat[];
   yearly:Stat[];
 
-  constructor(private runRepository:RunRepositoryService, private datePipe:DatePipe) {
+  constructor(private runRepository:RunRepositoryService, private datePipe:DatePipe, private statsService:StatsService) {
   }
 
   ngOnInit() {
@@ -40,7 +41,7 @@ export class OverviewComponent implements OnInit {
 
   makeWeeklyStats(runs:Run[]) {
     const WEEK_FORMAT = 'dd.MM.y';
-    this.weekly = this.makeIntervalStats(runs, OverviewComponent.SHOW_LAST_ENTRIES,
+    this.weekly = this.statsService.makeIntervalStats(runs, OverviewComponent.SHOW_LAST_ENTRIES,
       (date) => {
         let weekDay = (date.getDay() - OverviewComponent.WEEK_BEGIN + 7) % 7;
         let newDay = date.getDate() - weekDay;
@@ -58,7 +59,7 @@ export class OverviewComponent implements OnInit {
   }
 
   makeMonthlyStats(runs:Run[]) {
-    this.monthly = this.makeIntervalStats(runs, OverviewComponent.SHOW_LAST_ENTRIES,
+    this.monthly = this.statsService.makeIntervalStats(runs, OverviewComponent.SHOW_LAST_ENTRIES,
       (date) => {
         return new Date(date.getFullYear(), date.getMonth(), 1);
       },
@@ -74,7 +75,7 @@ export class OverviewComponent implements OnInit {
   makeYearlyStats(runs:Run[]) {
     let lastEntry = runs[runs.length - 1];
     let yearDelta = new Date().getFullYear() - lastEntry.getDateObj().getFullYear();
-    this.yearly = this.makeIntervalStats(runs, yearDelta + 1,
+    this.yearly = this.statsService.makeIntervalStats(runs, yearDelta + 1,
       (date) => {
         return new Date(date.getFullYear(), 0, 1);
       },
@@ -86,50 +87,5 @@ export class OverviewComponent implements OnInit {
       }
     );
   }
-  
-  
-  private makeIntervalStats(runs:Run[], entries:number,
-                            getStartInterval:(d:Date) => Date,
-                            getNextInterval:(d:Date) => Date,
-                            getStatLabel:(d:Date) => string):Stat[] {
-    let stats = [];
-
-    let startDate = getStartInterval(new Date());
-    let runIndex = 0;
-    for (let intervalCounter = 0; intervalCounter < entries; intervalCounter++) {
-      let interval = new Stat(getStatLabel(startDate));
-      stats.push(interval);
-
-      for (; runIndex < runs.length; runIndex++) {
-        let run = runs[runIndex];
-        if (run.date * 1000 < startDate.getTime()) {
-          break;
-        }
-
-        interval.totalLength += run.length;
-        interval.totalTimeUsed += run.timeUsed;
-      }
-
-      startDate = getNextInterval(startDate)
-    }
-    
-    return stats;
-  }
-  
 }
 
-
-class Stat {
-
-  public static WEEK_IN_MS = 7 * 24 * 60 * 60 * 1000;
-
-  public totalLength:number = 0;
-  public totalTimeUsed:number = 0;
-
-  constructor(public date:string) {
-  }
-
-  get paceKm():number {
-    return this.totalTimeUsed / (this.totalLength / 1000);
-  }
-}

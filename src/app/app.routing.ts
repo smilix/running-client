@@ -5,6 +5,7 @@ import {ListRunsComponent} from "./list-runs/list-runs.component";
 import {ViewRunComponent} from "./view-run/view-run.component";
 import {EditRunComponent} from "./edit-run/edit-run.component";
 import {LoginComponent} from "./login/login.component";
+import {MonthViewComponent} from "./details/month-view/month-view.component";
 
 const appRoutes:Routes = [
   {path: 'overview', component: OverviewComponent},
@@ -13,6 +14,7 @@ const appRoutes:Routes = [
   {path: 'editRun/:id', component: EditRunComponent},
   {path: 'newRun', component: EditRunComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'details/month', component: MonthViewComponent},
   {path: '**', redirectTo: '/login'}
 ];
 
