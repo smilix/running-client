@@ -1,5 +1,6 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {UtilsService} from "../utils.service";
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -25,7 +26,7 @@ export class DatetimeInputComponent implements ControlValueAccessor {
   @Input()
   styleClass:string;
 
-  constructor() {
+  constructor(private utils:UtilsService) {
   }
 
   //Placeholders for the callbacks which are later providesd
@@ -39,7 +40,7 @@ export class DatetimeInputComponent implements ControlValueAccessor {
     // console.log('writeValue:', value);
     if (value !== this.innerDate) {
       this.innerDate = value;
-      this.formattedDate = DatetimeInputComponent.formatDate(value);
+      this.formattedDate = this.formatDate(value);
     }
   }
 
@@ -66,16 +67,16 @@ export class DatetimeInputComponent implements ControlValueAccessor {
     return this.formattedDate;
   }
 
-  private static formatDate(d:Date):string {
+  private formatDate(d:Date):string {
     if (d == null) {
       return null;
     }
     // "2016-07-05T16:47"
     return d.getFullYear().toString() + '-'
-      + DatetimeInputComponent.zeroPadStr(d.getMonth() + 1) + '-'
-      + DatetimeInputComponent.zeroPadStr(d.getDate()) + 'T'
-      + DatetimeInputComponent.zeroPadStr(d.getHours()) + ':'
-      + DatetimeInputComponent.zeroPadStr(d.getMinutes());
+      + this.utils.zeroPad(d.getMonth() + 1) + '-'
+      + this.utils.zeroPad(d.getDate()) + 'T'
+      + this.utils.zeroPad(d.getHours()) + ':'
+      + this.utils.zeroPad(d.getMinutes());
   }
 
   private static parseDateString(date:string): Date {
@@ -93,11 +94,5 @@ export class DatetimeInputComponent implements ControlValueAccessor {
 
   }
 
-  private static zeroPadStr(n:number):string {
-    let str = n.toString();
-    if (str.length < 2) {
-      str = '0' + str;
-    }
-    return str;
-  }
+
 }

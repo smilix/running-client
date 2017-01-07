@@ -26,6 +26,8 @@ import {SessionHolder} from "./shared/auth/SessionHolder";
 import {Ng2Webstorage} from 'ng2-webstorage';
 import {AuthService} from "./shared/auth/auth.service";
 import { MonthViewComponent } from './details/month-view/month-view.component';
+import { StopWatchComponent } from './edit-run/stop-watch/stop-watch.component';
+import {UtilsService} from "./shared/utils.service";
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { MonthViewComponent } from './details/month-view/month-view.component';
     DistancePipe,
     DurationPipe,
     LoginComponent,
-    MonthViewComponent
+    MonthViewComponent,
+    StopWatchComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,7 @@ import { MonthViewComponent } from './details/month-view/month-view.component';
       deps: [XHRBackend, RequestOptions, Router, SessionHolder]
     },
     AuthService,
+    UtilsService,
   ],
   bootstrap: [AppComponent]
 })

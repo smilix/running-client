@@ -1,0 +1,14 @@
+<input class="form-control" [value]="timeUsedFormatted" readonly>
+<span class="input-group-btn">
+    <button type="button" class="btn btn-default btn-lg" (click)="startStop()">
+        <span class="glyphicon" [class.glyphicon-play]="!isPlaying" [class.glyphicon-pause]="isPlaying"></span>
+        {{isPlaying ? 'Stop' : 'Start'}}
+    </button>
+    <button type="button" class="btn btn-warning btn-lg" (click)="reset()" [disabled]="isPlaying">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <button type="button" class="btn btn-success btn-lg" (click)="applyValues()" [disabled]="isPlaying">
+        <span class="glyphicon glyphicon-ok"></span>
+        Übernehmen
+    </button>
+</span>

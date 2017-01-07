@@ -4,6 +4,7 @@ import {DatetimeInputComponent} from "../shared/datetime-input/datetime-input.co
 import {Run} from "../shared/run";
 import {RunRepositoryService} from "../shared/run-repository.service";
 import {Router, ActivatedRoute} from "@angular/router";
+import {StopWatchComponent} from "./stop-watch/stop-watch.component";
 
 export class RunViewModel {
 
@@ -20,7 +21,7 @@ export class RunViewModel {
   selector: 'app-edit-run',
   templateUrl: './edit-run.component.html',
   styleUrls: ['./edit-run.component.scss'],
-  providers: [RunRepositoryService, Location]
+  providers: [RunRepositoryService, Location, StopWatchComponent]
 })
 export class EditRunComponent implements OnInit {
 
@@ -99,6 +100,10 @@ export class EditRunComponent implements OnInit {
         self.error = err;
         self.sending = false;
       });
+  }
+
+  applyTime(seconds:number) {
+    this.model.timeUsed = Math.floor(seconds / 60);
   }
 
 }
