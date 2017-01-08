@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Credentials, AuthService} from "../shared/auth/auth.service";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -14,20 +14,27 @@ export class LoginComponent implements OnInit {
   sending = false;
   loginError:string = null;
 
-  constructor(private authService:AuthService, private router:Router) {
+  routeParam = null;
+
+  constructor(private authService:AuthService, private router:Router,  private activeRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.activeRoute.params.subscribe(params => {
+      this.routeParam = params['route'];
+    });
+
+
     if (this.authService.isLoggedIn()) {
       console.log('User is already logged in.');
-      this.router.navigate(['/overview']);
+      this.gotoNextPage();
       return;
     }
 
     this.authService.tryAutoLogin().subscribe(isLoggedInNow => {
       if (isLoggedInNow) {
         console.log('User logged in by remembered password.');
-        this.router.navigate(['/overview']);
+        this.gotoNextPage();
       }
     });
   }
@@ -38,13 +45,20 @@ export class LoginComponent implements OnInit {
 
     let self = this;
     this.authService.login(this.model).subscribe(
-      () => self.router.navigate(['/overview']),
+      () => this.gotoNextPage(),
       err => {
         self.loginError = err;
         self.sending = false;
       }
     );
+  }
 
+  private gotoNextPage() {
+    if (this.routeParam == null) {
+      this.router.navigate(['/overview']);
+    } else {
+      this.router.navigate([this.routeParam]);
+    }
   }
 
 }

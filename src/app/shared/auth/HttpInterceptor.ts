@@ -47,7 +47,7 @@ export class HttpInterceptor extends Http {
     return observable.catch((err, source) => {
       if (err.status == 401 && err.url.indexOf('/login') !== 0) {
         this.sessionHolder.clear();
-        this._router.navigate(['/login']);
+        this._router.navigate(['/login', {route: this._router.url}]);
         // return Observable.empty();
         return Observable.throw('"redirecting to login"');
       } else {
