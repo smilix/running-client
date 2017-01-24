@@ -1,4 +1,3 @@
-// foo bar
 p {
   background: yellow;
 }
@@ -6,3 +5,12 @@ p {
 #routerContent {
   margin-top: 80px;
 }
+
+.navbar-brand {
+  padding: 2px 15px;
+
+  .running-logo {
+    max-height: 50px;
+  }
+}
+
