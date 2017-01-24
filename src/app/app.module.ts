@@ -21,7 +21,7 @@ import {DistancePipe} from "./shared/distance.pipe";
 import {DurationPipe} from "./shared/duration.pipe";
 import {LoginComponent} from './login/login.component';
 import {Router} from "@angular/router";
-import {HttpInterceptor} from "./shared/auth/HttpInterceptor";
+import {HttpFactory} from "./shared/auth/HttpInterceptor";
 import {SessionHolder} from "./shared/auth/SessionHolder";
 import {Ng2Webstorage} from 'ng2-webstorage';
 import {AuthService} from "./shared/auth/auth.service";
@@ -58,8 +58,7 @@ import {UtilsService} from "./shared/utils.service";
     SessionHolder,
     {
       provide: Http,
-      useFactory: (backend:XHRBackend, requestOptions:RequestOptions, router:Router, sessionHolder:SessionHolder) =>
-        new HttpInterceptor(backend, requestOptions, router, sessionHolder),
+      useFactory: HttpFactory,
       deps: [XHRBackend, RequestOptions, Router, SessionHolder]
     },
     AuthService,

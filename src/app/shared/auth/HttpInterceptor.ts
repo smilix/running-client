@@ -1,7 +1,11 @@
-import {Http, Request, RequestOptionsArgs, Response, RequestOptions, ConnectionBackend, Headers} from '@angular/http';
+import {Http, Request, RequestOptionsArgs, Response, RequestOptions, ConnectionBackend, Headers, XHRBackend} from '@angular/http';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Rx';
 import {SessionHolder} from "./SessionHolder";
+
+export function HttpFactory(backend:XHRBackend, requestOptions:RequestOptions, router:Router, sessionHolder:SessionHolder) {
+  return new HttpInterceptor(backend, requestOptions, router, sessionHolder);
+}
 
 export class HttpInterceptor extends Http {
 
