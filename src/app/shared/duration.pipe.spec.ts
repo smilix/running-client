@@ -2,10 +2,11 @@
 
 import { async, inject } from '@angular/core/testing';
 import { DurationPipe } from './duration.pipe';
+import {UtilsService} from "./utils.service";
 
 describe('Pipe: Duration', () => {
   it('convert test', () => {
-    let pipe = new DurationPipe();
+    let pipe = new DurationPipe(new UtilsService());
 
     expect(pipe.transform(1)).toBe('01');
     expect(pipe.transform(55)).toBe('55');
