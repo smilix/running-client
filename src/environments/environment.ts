@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  // backendPath: 'http://localhost:8080/api'
-  backendPath: 'https://running.circlelab.de/api'
+  backendPath: 'http://localhost:8080/api'
+  // backendPath: 'https://running.circlelab.de/api'
 };

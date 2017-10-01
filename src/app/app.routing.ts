@@ -6,15 +6,16 @@ import {ViewRunComponent} from "./view-run/view-run.component";
 import {EditRunComponent} from "./edit-run/edit-run.component";
 import {LoginComponent} from "./login/login.component";
 import {MonthViewComponent} from "./details/month-view/month-view.component";
+import {AuthGuard} from "./shared/auth/auth.guard";
 
 const appRoutes:Routes = [
-  {path: 'overview', component: OverviewComponent},
-  {path: 'runs', component: ListRunsComponent},
-  {path: 'runs/:id', component: ViewRunComponent},
-  {path: 'editRun/:id', component: EditRunComponent},
-  {path: 'newRun', component: EditRunComponent},
+  {path: 'overview', component: OverviewComponent, canActivate: [AuthGuard]},
+  {path: 'runs', component: ListRunsComponent, canActivate: [AuthGuard]},
+  {path: 'runs/:id', component: ViewRunComponent, canActivate: [AuthGuard]},
+  {path: 'editRun/:id', component: EditRunComponent, canActivate: [AuthGuard]},
+  {path: 'newRun', component: EditRunComponent, canActivate: [AuthGuard]},
+  {path: 'details/month', component: MonthViewComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'details/month', component: MonthViewComponent},
   {path: '**', redirectTo: '/login'}
 ];
 

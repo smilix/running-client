@@ -41,7 +41,7 @@ export class HttpInterceptor extends Http {
       options.headers = new Headers();
     }
     options.headers.append('Content-Type', 'application/json');
-    if (this.sessionHolder.get() != null) {
+    if (this.sessionHolder.isValid()) {
       options.headers.append('Session-Id', this.sessionHolder.get());
     }
     return options;

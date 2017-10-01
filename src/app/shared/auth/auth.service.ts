@@ -63,7 +63,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.sessionHolder.get() != null;
+    return this.sessionHolder.isValid();
   }
 
   getSession() {

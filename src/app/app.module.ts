@@ -28,6 +28,7 @@ import {AuthService} from "./shared/auth/auth.service";
 import { MonthViewComponent } from './details/month-view/month-view.component';
 import { StopWatchComponent } from './edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
+import {AuthGuard} from "./shared/auth/auth.guard";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import {UtilsService} from "./shared/utils.service";
     Ng2Webstorage
   ],
   providers: [
+    AuthGuard,
     appRoutingProviders,
     SessionHolder,
     {
