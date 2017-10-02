@@ -3,17 +3,17 @@ import {Location} from '@angular/common';
 import {DatetimeInputComponent} from "../shared/datetime-input/datetime-input.component";
 import {Run} from "../shared/run";
 import {RunRepositoryService} from "../shared/run-repository.service";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute, Params} from "@angular/router";
 import {StopWatchComponent} from "./stop-watch/stop-watch.component";
+import {LocalStorageService} from "ng2-webstorage";
 
 export class RunViewModel {
 
-  public id:number;
-  
-  constructor(public date:Date,
-              public length:number,
-              public timeUsed:number,
-              public comment:string) {
+  constructor(public id: number,
+              public date: Date,
+              public length: number,
+              public timeUsed: number,
+              public comment: string) {
   }
 }
 
@@ -25,35 +25,51 @@ export class RunViewModel {
 })
 export class EditRunComponent implements OnInit {
 
-  model:RunViewModel = new RunViewModel(new Date(), 12, 60, '');
+  model: RunViewModel = {} as RunViewModel;
   sending = false;
-  error:string = null;
+  error: string = null;
   newRunMode = false;
+  recoverMode = false;
 
 
-  constructor(private runRepository:RunRepositoryService, private route:ActivatedRoute, private router:Router) {
+  constructor(private runRepository: RunRepositoryService, private route: ActivatedRoute, private router: Router, private storage: LocalStorageService) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if (!params['id']) {
-        this.newRunMode = true;
-
-        this.runRepository.getRunById(-1).then(run => {
-          this.model.length = Math.ceil(run.length / 1000);
-          this.model.timeUsed = Math.ceil(run.timeUsed / 60);
-        });
-      } else {
-        let id = +params['id']; // (+) converts string 'id' to a number
-        this.runRepository.getRunById(id).then(run => {
-          this.model.id = run.id;
-          this.model.date = new Date(run.date * 1000);
-          this.model.length = Math.ceil(run.length / 1000);
-          this.model.timeUsed = Math.ceil(run.timeUsed / 60);
-          this.model.comment = run.comment;
-        });
+      let recover = this.storage.retrieve('recover');
+      if (recover) {
+        this.recoverMode = true;
+        this.newRunMode = !recover.id;
+        this.model = new RunViewModel(recover.id, new Date(recover.date), recover.length, recover.timeUsed, recover.comment);
+        return;
       }
-    }).unsubscribe();
+
+      this.updateFromParams(params)
+    });
+  }
+
+  private updateFromParams(params: Params) {
+    if (!params['id']) {
+      this.newRunMode = true;
+
+      this.runRepository.getRunById(-1).then(run => {
+        this.model = new RunViewModel(null,
+          new Date(),
+          Math.ceil(run.length / 1000),
+          Math.ceil(run.timeUsed / 60),
+          '');
+      });
+    } else {
+      let id = +params['id']; // (+) converts string 'id' to a number
+      this.runRepository.getRunById(id).then(run => {
+        this.model = new RunViewModel(run.id,
+          new Date(run.date * 1000),
+          Math.ceil(run.length / 1000),
+          Math.ceil(run.timeUsed / 60),
+          run.comment);
+      });
+    }
   }
 
   decLength() {
@@ -72,7 +88,6 @@ export class EditRunComponent implements OnInit {
     this.model.timeUsed++;
   }
 
-
   save() {
     this.sending = true;
     this.error = null;
@@ -86,23 +101,38 @@ export class EditRunComponent implements OnInit {
       timeUsed: this.model.timeUsed * 60,
       comment: this.model.comment
     });
-    var promise;
+
+    let promise;
     if (this.newRunMode) {
       promise = this.runRepository.addRun(run);
     } else {
       run.id = this.model.id;
       promise = this.runRepository.updateRun(run);
     }
+
     promise.then(
-      function ok(newRun:Run) {
+      newRun => {
+        if (this.recoverMode) {
+          this.storage.clear('recover');
+          this.recoverMode = false;
+        }
         self.router.navigate(['/runs', {highlight: newRun.id}]);
-      }, function error(err) {
+      }, err => {
+        console.log('Saving recover data.');
+        this.storage.store('recover', this.model);
         self.error = err;
         self.sending = false;
-      });
+      }
+    );
   }
 
-  applyTime(seconds:number) {
+  dismissRecover() {
+    this.storage.clear('recover');
+    this.recoverMode = false;
+    this.updateFromParams(this.route.snapshot.params);
+  }
+
+  applyTime(seconds: number) {
     this.model.timeUsed = Math.floor(seconds / 60);
   }
 

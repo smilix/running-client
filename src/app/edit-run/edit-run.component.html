@@ -3,6 +3,10 @@
     <div class="alert alert-danger" *ngIf="error">Error adding new run.
       <pre>{{error}}</pre>
     </div>
+    <div class="alert alert-info" *ngIf="recoverMode">
+      <button type="button" class="close" (click)="dismissRecover()"><span>&times;</span></button>
+      Letzte Eingabe wiederhergestellt.
+    </div>
     <div class="form-group no-block">
       <label>Wann</label>
       <app-datetime-input [(ngModel)]="model.date" [disabled]="sending" name="date" styleClass="form-control input-lg"></app-datetime-input>
