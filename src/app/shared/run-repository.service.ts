@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/toPromise';
 import {Run} from "./run";
 import {environment} from "../../environments/environment";
+import {UtilsService} from "./utils.service";
 
 export class RunPage {
   constructor(public runs:Run[],
@@ -15,16 +16,7 @@ export class RunPage {
 @Injectable()
 export class RunRepositoryService {
 
-  private http;
-
-  constructor(http:Http) {
-    this.http = http;
-  }
-
-  private handleError(resp:any) {
-    var errData = resp && resp.json ? resp.json() : resp;
-    console.error('An error occurred', errData);
-    return Promise.reject(errData);
+  constructor(private http:Http, private utils:UtilsService) {
   }
 
   getRuns(start:number=0, max?:number):Promise<RunPage> {
@@ -46,7 +38,7 @@ export class RunRepositoryService {
           json.count
         )
       })
-      .catch(this.handleError);
+      .catch(this.utils.handleHttpError);
   }
   
   getRunById(id:number):Promise<Run> {
@@ -55,7 +47,7 @@ export class RunRepositoryService {
       .then(resp => {
         return new Run(resp.json());
       })
-      .catch(this.handleError);
+      .catch(this.utils.handleHttpError);
   }
 
   addRun(run:Run):Promise<Run> {
@@ -65,7 +57,7 @@ export class RunRepositoryService {
         run.id = resp.json().id;
         return run;
       })
-      .catch(this.handleError);
+      .catch(this.utils.handleHttpError);
   }
   
   updateRun(run:Run):Promise<Run> {
@@ -78,13 +70,13 @@ export class RunRepositoryService {
       .then(resp => {
         return new Run(resp.json());
       })
-      .catch(this.handleError);
+      .catch(this.utils.handleHttpError);
   }
   
-  deleteRun(id:number):Promise<void> {
+  deleteRun(id:number):Promise<any> {
     return this.http.delete(environment.backendPath + '/runs/' + id)
       .toPromise()
-      .catch(this.handleError);
+      .catch(this.utils.handleHttpError);
   }
 
 }

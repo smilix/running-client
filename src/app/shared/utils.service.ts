@@ -6,6 +6,12 @@ export class UtilsService {
   constructor() {
   }
 
+  public handleHttpError(resp:any) {
+    const errData = resp && resp.json ? resp.json() : resp;
+    console.error('An error occurred', errData);
+    return Promise.reject(errData);
+  }
+
   public zeroPad(n:number):string {
     let str = n.toString();
     if (str.length < 2) {

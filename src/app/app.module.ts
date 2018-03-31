@@ -29,6 +29,7 @@ import { MonthViewComponent } from './details/month-view/month-view.component';
 import { StopWatchComponent } from './edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
 import {AuthGuard} from "./shared/auth/auth.guard";
+import { ListShoesComponent } from './list-shoes/list-shoes.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {AuthGuard} from "./shared/auth/auth.guard";
     DurationPipe,
     LoginComponent,
     MonthViewComponent,
-    StopWatchComponent
+    StopWatchComponent,
+    ListShoesComponent
   ],
   imports: [
     BrowserModule,

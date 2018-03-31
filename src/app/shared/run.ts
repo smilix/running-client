@@ -19,3 +19,4 @@ export class Run {
     return new Date(this.date * 1000);
   }
 }
+
