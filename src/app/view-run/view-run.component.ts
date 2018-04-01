@@ -7,9 +7,7 @@ import {Location} from '@angular/common';
 @Component({
   selector: 'app-view-run',
   templateUrl: './view-run.component.html',
-  styleUrls: ['./view-run.component.scss'],
-  providers: [RunRepositoryService]
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./view-run.component.scss']
 })
 export class ViewRunComponent implements OnInit {
 

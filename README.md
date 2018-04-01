@@ -2,6 +2,10 @@
 
 The Angular2 web client for my running log.
 
+# 
+
+On Mac you can `npm i fsevents` to reduce the cpu load. 
+
 ## TODO
 
  * [X] Login/Auth

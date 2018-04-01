@@ -1,19 +1,23 @@
+<button class="btn btn-default" routerLink="/newShoe">Neuer Schuh</button>
+
 <table class="table table-striped table-hover">
   <thead>
   <tr>
     <th class="text-center">Gekauft</th>
     <th class="text-center">Kommentar</th>
-    <th class="text-center">Benutzt</th>
+    <th class="text-center">Läufe</th>
+    <th class="text-center">Strecke total</th>
     <th></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let shoe of shoeList">
-    <td>{{shoe.bought * 1000 | date:'dd.MM.y HH:mm'}}</td>
+    <td>{{shoe.getBoughtDate() | date:'dd.MM.y HH:mm'}}</td>
     <td class="text-right">{{shoe.comment}}</td>
-    <td class="text-right">{{shoe.usedTotal}}</td>
+    <td class="text-right">{{shoe.used}} </td>
+    <td class="text-right">{{shoe.totalLength | distance}} km</td>
     <td class="text-center">
-      <button class="btn btn-link" (click)="goTo(shoe.id)">Details</button>
+      <a [routerLink]="['/shoes', shoe.id]">Details</a>
     </td>
   </tr>
   </tbody>

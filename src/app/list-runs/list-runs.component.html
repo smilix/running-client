@@ -1,3 +1,4 @@
+<!--<app-run-list [runList]="runList" [highlight]="highlight" (onGotoRun)="goTo($event)"></app-run-list>-->
 <table class="table table-striped table-hover">
   <thead>
   <tr>
@@ -10,17 +11,16 @@
   </thead>
   <tbody>
   <tr *ngFor="let run of runList | paginate: paginateConfig" [class.success]="highlight == run.id">
-    <td>{{run.date * 1000 | date:'dd.MM.y HH:mm'}}</td>
+    <td>{{run.getDateObj() | date:'dd.MM.y HH:mm'}}</td>
     <td class="text-right">{{run.length | distance}} km</td>
     <td class="text-right">{{run.timeUsed | duration}}</td>
     <td class="text-right">{{run.paceKm | duration}}</td>
     <td class="text-center">
-      <button class="btn btn-link" (click)="goTo(run.id)">Details</button>
+      <a [routerLink]="['/runs', run.id]">Details</a>
     </td>
   </tr>
   </tbody>
 </table>
-
 
 <!-- with bootstrap template -->
 <pagination-controls #pagination (pageChange)="paginateConfig.currentPage = $event" class="text-center">

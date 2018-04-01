@@ -30,6 +30,10 @@ import { StopWatchComponent } from './edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
 import {AuthGuard} from "./shared/auth/auth.guard";
 import { ListShoesComponent } from './list-shoes/list-shoes.component';
+import {RunRepositoryService} from "./shared/run-repository.service";
+import {ShoeService} from "./shared/shoe.service";
+import { EditShoeComponent } from './edit-shoe/edit-shoe.component';
+import { ViewShoeComponent } from './view-shoe/view-shoe.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,9 @@ import { ListShoesComponent } from './list-shoes/list-shoes.component';
     LoginComponent,
     MonthViewComponent,
     StopWatchComponent,
-    ListShoesComponent
+    ListShoesComponent,
+    EditShoeComponent,
+    ViewShoeComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +73,8 @@ import { ListShoesComponent } from './list-shoes/list-shoes.component';
     },
     AuthService,
     UtilsService,
+    RunRepositoryService,
+    ShoeService
   ],
   bootstrap: [AppComponent]
 })

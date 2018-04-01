@@ -1,10 +1,12 @@
 export class Shoe {
 
-  id:number;
-  bought:number;
-  comment:string;
+  id: number;
+  bought: number;
+  comment: string;
+  used: number;
+  totalLength: number;
 
-  constructor(values:Object = {}) {
+  constructor(values: Object = {}) {
     Object.assign(this, values);
   }
 
@@ -12,3 +14,4 @@ export class Shoe {
     return new Date(this.bought * 1000);
   }
 }
+
