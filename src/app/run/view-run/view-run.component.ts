@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {RunRepositoryService} from "../shared/run-repository.service";
+import {RunRepositoryService} from "../../shared/run-repository.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Run} from "../shared/run";
+import {Run} from "../../shared/run";
 import {Location} from '@angular/common';
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {UtilsService} from "../../shared/utils.service";
+import {UtilsService} from "../../../shared/utils.service";
 
 @Component({
   selector: 'app-stop-watch',

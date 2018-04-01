@@ -11,9 +11,9 @@ import {
 }  from './app.routing';
 
 import {OverviewComponent} from "./overview/overview.component";
-import {ListRunsComponent} from "./list-runs/list-runs.component";
-import {ViewRunComponent} from "./view-run/view-run.component";
-import {EditRunComponent} from "./edit-run/edit-run.component";
+import {ListRunsComponent} from "./run/list-runs/list-runs.component";
+import {ViewRunComponent} from "./run/view-run/view-run.component";
+import {EditRunComponent} from "./run/edit-run/edit-run.component";
 
 import {AppComponent} from './app.component';
 import {DatetimeInputComponent} from "./shared/datetime-input/datetime-input.component";
@@ -26,7 +26,7 @@ import {SessionHolder} from "./shared/auth/SessionHolder";
 import {Ng2Webstorage} from 'ng2-webstorage';
 import {AuthService} from "./shared/auth/auth.service";
 import { MonthViewComponent } from './details/month-view/month-view.component';
-import { StopWatchComponent } from './edit-run/stop-watch/stop-watch.component';
+import { StopWatchComponent } from './run/edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
 import {AuthGuard} from "./shared/auth/auth.guard";
 import { ListShoesComponent } from './list-shoes/list-shoes.component';

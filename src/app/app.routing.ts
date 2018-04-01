@@ -1,9 +1,9 @@
 import {ModuleWithProviders} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {OverviewComponent} from "./overview/overview.component";
-import {ListRunsComponent} from "./list-runs/list-runs.component";
-import {ViewRunComponent} from "./view-run/view-run.component";
-import {EditRunComponent} from "./edit-run/edit-run.component";
+import {ListRunsComponent} from "./run/list-runs/list-runs.component";
+import {ViewRunComponent} from "./run/view-run/view-run.component";
+import {EditRunComponent} from "./run/edit-run/edit-run.component";
 import {LoginComponent} from "./login/login.component";
 import {MonthViewComponent} from "./details/month-view/month-view.component";
 import {AuthGuard} from "./shared/auth/auth.guard";

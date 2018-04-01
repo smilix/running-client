@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Run} from "../shared/run";
-import {RunRepositoryService} from "../shared/run-repository.service";
+import {Run} from "../../shared/run";
+import {RunRepositoryService} from "../../shared/run-repository.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {IPaginationInstance} from "ng2-pagination/index";
 
