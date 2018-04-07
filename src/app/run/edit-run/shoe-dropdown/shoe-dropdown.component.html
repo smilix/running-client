@@ -1,0 +1,3 @@
+<select size="1" [(ngModel)]="shoeIdStr" (change)="valueChange()" [class]="styleClass" [disabled]="disabled">
+  <option *ngFor="let shoe of shoeList" [value]="shoe.id">{{shoe.getBoughtDate() | date:'dd.MM.y'}} - {{shoe.comment}}</option>
+</select>

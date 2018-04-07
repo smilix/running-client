@@ -29,11 +29,13 @@ import { MonthViewComponent } from './details/month-view/month-view.component';
 import { StopWatchComponent } from './run/edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
 import {AuthGuard} from "./shared/auth/auth.guard";
-import { ListShoesComponent } from './list-shoes/list-shoes.component';
+import { ListShoesComponent } from './shoe/list-shoes/list-shoes.component';
 import {RunRepositoryService} from "./shared/run-repository.service";
 import {ShoeService} from "./shared/shoe.service";
-import { EditShoeComponent } from './edit-shoe/edit-shoe.component';
-import { ViewShoeComponent } from './view-shoe/view-shoe.component';
+import { EditShoeComponent } from './shoe/edit-shoe/edit-shoe.component';
+import { ViewShoeComponent } from './shoe/view-shoe/view-shoe.component';
+import {HttpCache} from "./shared/http-cache";
+import { ShoeDropdownComponent } from './run/edit-run/shoe-dropdown/shoe-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { ViewShoeComponent } from './view-shoe/view-shoe.component';
     StopWatchComponent,
     ListShoesComponent,
     EditShoeComponent,
-    ViewShoeComponent
+    ViewShoeComponent,
+    ShoeDropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { ViewShoeComponent } from './view-shoe/view-shoe.component';
     AuthService,
     UtilsService,
     RunRepositoryService,
-    ShoeService
+    ShoeService,
+    HttpCache
   ],
   bootstrap: [AppComponent]
 })

@@ -5,10 +5,11 @@ import 'rxjs/add/operator/toPromise';
 import {Run} from "./run";
 import {environment} from "../../environments/environment";
 import {UtilsService} from "./utils.service";
+import {HttpCache} from "./http-cache";
 
 export class RunPage {
-  constructor(public runs:Run[],
-              public count:number) {
+  constructor(public runs: Run[],
+              public count: number) {
   }
 }
 
@@ -16,10 +17,10 @@ export class RunPage {
 @Injectable()
 export class RunRepositoryService {
 
-  constructor(private http:Http, private utils:UtilsService) {
+  constructor(private http: Http, private utils: UtilsService, private httpCache: HttpCache) {
   }
 
-  getRuns(start:number=0, max?:number):Promise<RunPage> {
+  getRuns(start: number = 0, max?: number): Promise<RunPage> {
     let urlParams = new URLSearchParams();
     urlParams.set('start', start.toString());
     if (max) {
@@ -29,7 +30,7 @@ export class RunRepositoryService {
     let options = {
       search: urlParams
     };
-    return this.http.get(environment.backendPath + '/runs', options)
+    return this.httpCache.get(environment.backendPath + '/runs', options)
       .toPromise()
       .then(resp => {
         var json = resp.json();
@@ -40,9 +41,9 @@ export class RunRepositoryService {
       })
       .catch(this.utils.handleHttpError);
   }
-  
-  getRunById(id:number):Promise<Run> {
-    return this.http.get(environment.backendPath + '/runs/' + id)
+
+  getRunById(id: number): Promise<Run> {
+    return this.httpCache.get(environment.backendPath + '/runs/' + id)
       .toPromise()
       .then(resp => {
         return new Run(resp.json());
@@ -50,7 +51,8 @@ export class RunRepositoryService {
       .catch(this.utils.handleHttpError);
   }
 
-  addRun(run:Run):Promise<Run> {
+  addRun(run: Run): Promise<Run> {
+    this.httpCache.clear();
     return this.http.post(environment.backendPath + '/runs', run)
       .toPromise()
       .then(resp => {
@@ -59,12 +61,13 @@ export class RunRepositoryService {
       })
       .catch(this.utils.handleHttpError);
   }
-  
-  updateRun(run:Run):Promise<Run> {
-    if (run.id == undefined || run.id == null || !run.id) {
+
+  updateRun(run: Run): Promise<Run> {
+    if (run.id == undefined || run.id == null || !run.id) {
       throw new Error('The run must have an id.');
     }
-    
+
+    this.httpCache.clear();
     return this.http.put(environment.backendPath + '/runs/' + run.id, run)
       .toPromise()
       .then(resp => {
@@ -72,8 +75,9 @@ export class RunRepositoryService {
       })
       .catch(this.utils.handleHttpError);
   }
-  
-  deleteRun(id:number):Promise<any> {
+
+  deleteRun(id: number): Promise<any> {
+    this.httpCache.clear();
     return this.http.delete(environment.backendPath + '/runs/' + id)
       .toPromise()
       .catch(this.utils.handleHttpError);

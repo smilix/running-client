@@ -6,6 +6,7 @@ export class Run {
   // in seconds
   timeUsed:number;
   comment:string;
+  shoeId: number;
 
   constructor(values:Object = {}) {
     Object.assign(this, values);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ShoeDetail, ShoeService} from "../shared/shoe.service";
+import {ShoeComb, ShoeService} from "../../shared/shoe.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from '@angular/common';
 
@@ -10,7 +10,7 @@ import {Location} from '@angular/common';
 })
 export class ViewShoeComponent implements OnInit {
 
-  shoeDetail: ShoeDetail;
+  shoeDetail: ShoeComb;
 
   constructor(private route:ActivatedRoute, private router:Router, private shoeService:ShoeService, private location:Location) { }
 

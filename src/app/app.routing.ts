@@ -7,8 +7,9 @@ import {EditRunComponent} from "./run/edit-run/edit-run.component";
 import {LoginComponent} from "./login/login.component";
 import {MonthViewComponent} from "./details/month-view/month-view.component";
 import {AuthGuard} from "./shared/auth/auth.guard";
-import {ListShoesComponent} from "./list-shoes/list-shoes.component";
-import {ViewShoeComponent} from "./view-shoe/view-shoe.component";
+import {ListShoesComponent} from "./shoe/list-shoes/list-shoes.component";
+import {ViewShoeComponent} from "./shoe/view-shoe/view-shoe.component";
+import {EditShoeComponent} from "./shoe/edit-shoe/edit-shoe.component";
 
 const appRoutes:Routes = [
   {path: 'overview', component: OverviewComponent, canActivate: [AuthGuard]},
@@ -18,7 +19,8 @@ const appRoutes:Routes = [
   {path: 'newRun', component: EditRunComponent, canActivate: [AuthGuard]},
   {path: 'shoes', component: ListShoesComponent, canActivate: [AuthGuard]},
   {path: 'shoes/:id', component: ViewShoeComponent, canActivate: [AuthGuard]},
-  {path: 'editShoe/:id', component: ViewShoeComponent, canActivate: [AuthGuard]},
+  {path: 'editShoe/:id', component: EditShoeComponent, canActivate: [AuthGuard]},
+  {path: 'newShoe', component: EditShoeComponent, canActivate: [AuthGuard]},
   {path: 'details/month', component: MonthViewComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: '**', redirectTo: '/login'}

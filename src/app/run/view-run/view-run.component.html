@@ -16,6 +16,10 @@
     <td>Kommentar</td>
     <td>{{run.comment}}</td>
   </tr>
+  <tr>
+    <td>Schuh</td>
+    <td *ngIf="shoe">{{shoe?.comment}}  (gekauft: {{shoe?.getBoughtDate() | date:'dd.MM.y' }}) [ <a [routerLink]="['/shoes', shoe?.id]">[ Details ]</a></td>
+  </tr>
   </tbody>
 </table>
 

@@ -6,6 +6,7 @@ import {RunRepositoryService} from "../../shared/run-repository.service";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {StopWatchComponent} from "./stop-watch/stop-watch.component";
 import {LocalStorageService} from "ng2-webstorage";
+import {ShoeService} from "../../shared/shoe.service";
 
 export class RunViewModel {
 
@@ -13,7 +14,8 @@ export class RunViewModel {
               public date: Date,
               public length: number,
               public timeUsed: number,
-              public comment: string) {
+              public comment: string,
+              public shoeId: number) {
   }
 }
 
@@ -32,7 +34,7 @@ export class EditRunComponent implements OnInit {
   recoverMode = false;
 
 
-  constructor(private runRepository: RunRepositoryService, private route: ActivatedRoute, private router: Router, private storage: LocalStorageService) {
+  constructor(private runRepository: RunRepositoryService, private route: ActivatedRoute, private router: Router, private storage: LocalStorageService, private shoeService: ShoeService) {
   }
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class EditRunComponent implements OnInit {
       if (recover) {
         this.recoverMode = true;
         this.newRunMode = !recover.id;
-        this.model = new RunViewModel(recover.id, new Date(recover.date), recover.length, recover.timeUsed, recover.comment);
+        this.model = new RunViewModel(recover.id, new Date(recover.date), recover.length, recover.timeUsed, recover.comment, recover.shoeId);
         return;
       }
 
@@ -54,11 +56,14 @@ export class EditRunComponent implements OnInit {
       this.newRunMode = true;
 
       this.runRepository.getRunById(-1).then(run => {
-        this.model = new RunViewModel(null,
-          new Date(),
-          Math.ceil(run.length / 1000),
-          Math.ceil(run.timeUsed / 60),
-          '');
+        this.shoeService.getLatestShoe().then(shoe => {
+          this.model = new RunViewModel(null,
+            new Date(),
+            Math.ceil(run.length / 1000),
+            Math.ceil(run.timeUsed / 60),
+            '',
+            shoe.id);
+        });
       });
     } else {
       let id = +params['id']; // (+) converts string 'id' to a number
@@ -67,7 +72,8 @@ export class EditRunComponent implements OnInit {
           new Date(run.date * 1000),
           Math.ceil(run.length / 1000),
           Math.ceil(run.timeUsed / 60),
-          run.comment);
+          run.comment,
+          run.shoeId);
       });
     }
   }
@@ -93,13 +99,13 @@ export class EditRunComponent implements OnInit {
     this.error = null;
 
     let self = this;
-    console.log('run data:', this.model);
     let timestamp = Math.floor(this.model.date.getTime() / 1000);
     let run = new Run({
       date: timestamp,
       length: this.model.length * 1000,
       timeUsed: this.model.timeUsed * 60,
-      comment: this.model.comment
+      comment: this.model.comment,
+      shoeId: this.model.shoeId
     });
 
     let promise;
@@ -120,7 +126,7 @@ export class EditRunComponent implements OnInit {
       }, err => {
         console.log('Saving recover data.');
         this.storage.store('recover', this.model);
-        self.error = err;
+        self.error = err.reason;
         self.sending = false;
       }
     );

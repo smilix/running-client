@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ShoeService} from "../shared/shoe.service";
-import {Shoe} from "../shared/shoe";
+import {ShoeService} from "../../shared/shoe.service";
+import {ShoeDetail} from "../../shared/shoe";
 
 @Component({
   selector: 'app-list-shoes',
@@ -9,7 +9,7 @@ import {Shoe} from "../shared/shoe";
 })
 export class ListShoesComponent implements OnInit {
 
-  shoeList: Shoe[];
+  shoeList: ShoeDetail[];
 
   constructor(private shoeService:ShoeService) { }
 
