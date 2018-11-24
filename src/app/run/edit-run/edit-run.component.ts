@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
-import {DatetimeInputComponent} from "../../shared/datetime-input/datetime-input.component";
 import {Run} from "../../shared/run";
 import {RunRepositoryService} from "../../shared/run-repository.service";
-import {Router, ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {StopWatchComponent} from "./stop-watch/stop-watch.component";
-import {LocalStorageService} from "ng2-webstorage";
+import {LocalStorageService} from "ngx-webstorage";
 import {ShoeService} from "../../shared/shoe.service";
 
 export class RunViewModel {

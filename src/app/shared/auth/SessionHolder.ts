@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {LocalStorage} from 'ng2-webstorage';
-import {JwtHelper} from "angular2-jwt";
+import {LocalStorage} from 'ngx-webstorage';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class SessionHolder {
@@ -8,7 +8,7 @@ export class SessionHolder {
   @LocalStorage()
   private session: string;
 
-  private jwtHelper = new JwtHelper();
+  private jwtHelper = new JwtHelperService();
 
   constructor() {
   }

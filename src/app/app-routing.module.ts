@@ -1,5 +1,6 @@
-import {ModuleWithProviders} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+
 import {OverviewComponent} from "./overview/overview.component";
 import {ListRunsComponent} from "./run/list-runs/list-runs.component";
 import {ViewRunComponent} from "./run/view-run/view-run.component";
@@ -11,7 +12,7 @@ import {ListShoesComponent} from "./shoe/list-shoes/list-shoes.component";
 import {ViewShoeComponent} from "./shoe/view-shoe/view-shoe.component";
 import {EditShoeComponent} from "./shoe/edit-shoe/edit-shoe.component";
 
-const appRoutes:Routes = [
+const routes: Routes = [
   {path: 'overview', component: OverviewComponent, canActivate: [AuthGuard]},
   {path: 'runs', component: ListRunsComponent, canActivate: [AuthGuard]},
   {path: 'runs/:id', component: ViewRunComponent, canActivate: [AuthGuard]},
@@ -26,7 +27,9 @@ const appRoutes:Routes = [
   {path: '**', redirectTo: '/login'}
 ];
 
-
-export const appRoutingProviders:any[] = [];
-
-export const routing:ModuleWithProviders = RouterModule.forRoot(appRoutes);
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule {
+}

@@ -1,14 +1,10 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule, XHRBackend, Http, RequestOptions} from '@angular/http';
+import {Http, HttpModule, RequestOptions, XHRBackend} from '@angular/http';
 
 import {Ng2PaginationModule} from 'ng2-pagination';
-
-import {
-  routing,
-  appRoutingProviders
-}  from './app.routing';
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
 import {OverviewComponent} from "./overview/overview.component";
 import {ListRunsComponent} from "./run/list-runs/list-runs.component";
@@ -23,19 +19,19 @@ import {LoginComponent} from './login/login.component';
 import {Router} from "@angular/router";
 import {HttpFactory} from "./shared/auth/HttpInterceptor";
 import {SessionHolder} from "./shared/auth/SessionHolder";
-import {Ng2Webstorage} from 'ng2-webstorage';
 import {AuthService} from "./shared/auth/auth.service";
-import { MonthViewComponent } from './details/month-view/month-view.component';
-import { StopWatchComponent } from './run/edit-run/stop-watch/stop-watch.component';
+import {MonthViewComponent} from './details/month-view/month-view.component';
+import {StopWatchComponent} from './run/edit-run/stop-watch/stop-watch.component';
 import {UtilsService} from "./shared/utils.service";
 import {AuthGuard} from "./shared/auth/auth.guard";
-import { ListShoesComponent } from './shoe/list-shoes/list-shoes.component';
+import {ListShoesComponent} from './shoe/list-shoes/list-shoes.component';
 import {RunRepositoryService} from "./shared/run-repository.service";
 import {ShoeService} from "./shared/shoe.service";
-import { EditShoeComponent } from './shoe/edit-shoe/edit-shoe.component';
-import { ViewShoeComponent } from './shoe/view-shoe/view-shoe.component';
+import {EditShoeComponent} from './shoe/edit-shoe/edit-shoe.component';
+import {ViewShoeComponent} from './shoe/view-shoe/view-shoe.component';
 import {HttpCache} from "./shared/http-cache";
-import { ShoeDropdownComponent } from './run/edit-run/shoe-dropdown/shoe-dropdown.component';
+import {ShoeDropdownComponent} from './run/edit-run/shoe-dropdown/shoe-dropdown.component';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -61,13 +57,12 @@ import { ShoeDropdownComponent } from './run/edit-run/shoe-dropdown/shoe-dropdow
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing,
     Ng2PaginationModule,
-    Ng2Webstorage
+    NgxWebstorageModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     AuthGuard,
-    appRoutingProviders,
     SessionHolder,
     {
       provide: Http,

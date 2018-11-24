@@ -1,19 +1,19 @@
-///<reference path="../../../../node_modules/rxjs/add/operator/catch.d.ts"/>
 import {Injectable} from '@angular/core';
 import {Http, Response} from "@angular/http";
 import {SessionHolder} from "./SessionHolder";
-import {Observable, Subject} from "rxjs/Rx";
-import {LocalStorage} from "ng2-webstorage/dist/app";
+import {LocalStorage} from "ngx-webstorage";
 import {environment} from "../../../environments/environment";
+import {Observable, of, Subject, throwError} from "rxjs";
+import {catchError, map} from "rxjs/operators";
 
 export class Credentials {
 
-  constructor(public user:string, public password:string, public remember:boolean) {
+  constructor(public user: string, public password: string, public remember: boolean) {
   }
 }
 
 class SavedCredentials {
-  constructor(public user:string, public password:string) {
+  constructor(public user: string, public password: string) {
   }
 }
 
@@ -22,31 +22,33 @@ class SavedCredentials {
 export class AuthService {
 
   @LocalStorage()
-  private _savedCredentials:SavedCredentials;
+  private _savedCredentials: SavedCredentials;
 
   private _isLoggedIn = new Subject<boolean>();
 
 
-  constructor(private http:Http, private sessionHolder:SessionHolder) {
+  constructor(private http: Http, private sessionHolder: SessionHolder) {
     this._isLoggedIn.next(this.isLoggedIn());
   }
 
-  private loginInternal(user:string, password:string) {
+  private loginInternal(user: string, password: string) {
     return this.http.post(environment.backendPath + '/auth', {
       user: user,
       password: password
-    }).map((resp:Response) => {
-      var json = resp.json();
-      this.sessionHolder.set(json.session);
-      this._isLoggedIn.next(true);
-      return true;
-    }).catch((error:any) => {
-      console.error('An error occurred', error);
-      return Observable.throw(error.json().reason);
-    });
+    }).pipe(
+      map((resp: Response) => {
+        var json = resp.json();
+        this.sessionHolder.set(json.session);
+        this._isLoggedIn.next(true);
+        return true;
+      }),
+      catchError(error => {
+        console.error('An error occurred', error);
+        return throwError(error.json().reason);
+      }));
   }
 
-  login(data:Credentials):Observable<boolean> {
+  login(data: Credentials): Observable<boolean> {
     if (data.remember) {
       this._savedCredentials = new SavedCredentials(data.user, data.password);
     }
@@ -54,11 +56,10 @@ export class AuthService {
     return this.loginInternal(data.user, data.password);
   }
 
-  tryAutoLogin():Observable<boolean> {
+  tryAutoLogin(): Observable<boolean> {
     if (this._savedCredentials == null) {
-      return Observable.from([false]);
+      return of(false);
     }
-
     return this.loginInternal(this._savedCredentials.user, this._savedCredentials.password);
   }
 
@@ -80,7 +81,7 @@ export class AuthService {
    * Observes the current login state.
    * @returns {Observable<boolean>} true/false depending on the login state
    */
-  loggedInObserver():Observable<boolean> {
+  loggedInObserver(): Observable<boolean> {
     return this._isLoggedIn.asObservable();
   }
 

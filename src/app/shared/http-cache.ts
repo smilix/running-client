@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Http, RequestOptionsArgs, Response} from "@angular/http";
-import {Observable} from "rxjs/Observable";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
 
 interface Entry {
   isObs: boolean;
@@ -30,21 +31,21 @@ export class HttpCache {
       if (fromCache.isObs) {
         return fromCache.value as Observable<Response>;
       } else {
-        return Observable.of(fromCache.value);
+        return of(fromCache.value as Response);
       }
     } else {
-      const obs = this.http.get(url, options).share();
+      const obs = this.http.get(url, options);
       this.cached.set(key, {
         isObs: true,
         value: obs
       });
-      return obs.map(resp => {
+      return obs.pipe(map(resp => {
         this.cached.set(key, {
           isObs: false,
           value: resp
         });
         return resp;
-      });
+      }));
     }
   }
 }

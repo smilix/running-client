@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ShoeComb, ShoeService} from "../../shared/shoe.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from '@angular/common';
@@ -15,7 +15,7 @@ export class ViewShoeComponent implements OnInit {
   constructor(private route:ActivatedRoute, private router:Router, private shoeService:ShoeService, private location:Location) { }
 
   ngOnInit() {
-    this.route.params.map(p => p.id).subscribe(id => {
+    this.route.snapshot.params.map(p => p.id).subscribe(id => {
       let intId = +id; // (+) converts string 'id' to a number
 
       this.shoeService.getShoeDetails(intId).then(details => this.shoeDetail = details);
